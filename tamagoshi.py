@@ -66,7 +66,7 @@ class Tamaghosi_dragao(Tamaghosi):
 class TamaghosiRobo(Tamaghosi):
     def __init__(self, nome: str):
         super().__init__(nome)
-        self.bateria = 100  # novo atributo
+        self.bateria = 100  #novo atributo
 
     def recarregar(self):
         self.bateria = 100
@@ -82,7 +82,7 @@ class TamaghosiRobo(Tamaghosi):
 class Tamaghosi_Bruxo(Tamaghosi):
     def __init__(self, nome: str):
         super().__init__(nome)
-        self.mana = 100  # novo atributo
+        self.força= 100  # novo atributo
 
     def lançar_Magia(self):
         print(f"{self.nome} lançou o feitiço 'Lumos' ")
@@ -92,6 +92,8 @@ class Tamaghosi_Bruxo(Tamaghosi):
 
     def usarVarinha(self):
         print(f"{self.nome} usou a varinha 'Relíqueas da Morte' ")
+
+
 
 
 
