@@ -92,11 +92,3 @@ class Tamaghosi_Bruxo(Tamaghosi):
 
     def usarVarinha(self):
         print(f"{self.nome} usou a varinha 'Relíqueas da Morte' ")
-
-
-
-
-
-
-
- 

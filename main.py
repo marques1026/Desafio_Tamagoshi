@@ -7,11 +7,12 @@ class Tamaghosi:
         self.saude = 100
         self.idade = 0
         self.tedio = 0
-
-    def alimentar(self, quantidade):
-        if (quantidade >= 0) and (quantidade <= 100):
-            self.fome -= self.fome * (quantidade / 100)
-            print(f"{self.nome} foi alimentado. Sua fome agora é {int(self.fome)}.")
+        
+    def alimentar(self):
+        self.fome -= 10
+        self.fome = max(0, self.fome)  # evita valores negativos
+        print(f"{self.nome} foi alimentado. Fome agora: {int(self.fome)}")
+   
 
     def brincar(self, quantidade):
         if (quantidade >= 0) and (quantidade <= 100):
@@ -27,13 +28,13 @@ class Tamaghosi:
         elif humor >= 20:
             return "Triste"
         else:
-            return "Furioso"
+            return "Bravo"
 
     def vida(self):
-        # Aumenta a perda de saúde com base na fome e no tédio.
+        #aumenta a perda de saúde baseado no tanto de fome e tédio
         if self.fome > 90 or self.tedio > 90:
             self.saude -= 20
-            print(f"Alerta! {self.nome} está muito negligenciado e a saúde está caindo rapidamente!")
+            print(f"Alerta, a saúde de {self.nome} está baixa")
         elif self.fome > 70 or self.tedio > 70:
             self.saude -= 10
             print(f"{self.nome} não está se sentindo bem. A saúde está diminuindo.")
@@ -42,7 +43,7 @@ class Tamaghosi:
 
         if self.saude <= 0:
             self.saude = 0
-            print(f"\n{self.nome} infelizmente morreu devido à falta de cuidado. Fim de jogo!")
+            print(f"\n{self.nome} infelizmente faleceu...... Fim de jogo!")
             return False
         
         return True
@@ -60,7 +61,7 @@ class Tamaghosi_dragao(Tamaghosi):
         self.fogo = 50
 
     def soltar_fogo(self):
-        print(f"{self.nome} cuspiu fogo! Isso foi divertido!")
+        print(f"{self.nome} soltou fogo!")
         self.tedio = max(0, self.tedio - 10)
 
     def voar(self):
@@ -80,7 +81,7 @@ class TamaghosiRobo(Tamaghosi):
 
     def recarregar(self):
         self.bateria = 100
-        print(f"{self.nome} foi recarregado. A bateria está em 100%.")
+        print(f"{self.nome} foi recarregado e a bateria está em 100%.")
 
     def desligar(self):
         print(f"{self.nome} desligou. Bom descanso!")
@@ -88,7 +89,7 @@ class TamaghosiRobo(Tamaghosi):
         self.bateria = max(0, self.bateria - 10)
 
     def cantar(self):
-        print(f"{self.nome} está cantando 'Billy Jean' de Michael Jackson.")
+        print(f"{self.nome} está cantando 'Bily Jean' de Michael Jackson.")
         self.tedio = max(0, self.tedio - 15)
 
 
@@ -98,7 +99,7 @@ class Tamaghosi_Bruxo(Tamaghosi):
         self.forca = 100
 
     def lancar_Magia(self):
-        print(f"{self.nome} lançou o feitiço 'Lumos'. O ambiente ficou mais claro!")
+        print(f"{self.nome} lançou o feitiço 'Lumos', o ambiente ficou mais claro!")
         self.tedio = max(0, self.tedio - 10)
 
     def casa(self):
@@ -135,11 +136,11 @@ def main():
         print("Opção inválida. Criando um bichinho Tamaghosi padrão.")
         pet = Tamaghosi(pet_name)
 
-    print(f"\n{pet.nome} é seu novo bichinho virtual! Cuide bem dele.")
+    print(f"\n{pet.nome} é seu novo bichinho virtual! Cuide bem dele(a).")
 
-    # O loop principal do jogo que continua até o usuário querer sair ou o bichinho morrer.
+    #loop principal do jogo que continua até o usuário querer sair ou o pet morrer
     while True:
-        print("\n--- STATUS DO BICHINHO ---")
+        print("\n--- status do seu pet ---")
         print(f"Nome: {pet.nome}")
         print(f"Saúde: {int(pet.saude)}")
         print(f"Fome: {int(pet.fome)}")
@@ -150,8 +151,9 @@ def main():
         print("1. Alimentar")
         print("2. Brincar")
         
-        # Opções específicas para cada tipo de pet
-        if isinstance(pet, Tamaghosi_dragao):
+        #prompt pra exibir pra cada tipo de pet
+        if isinstance(pet, Tamaghosi_dragao): # o insistance verifica qual é o tipo do pet para mostrar suas ações exclusivas no prompt
+
             print("3. Soltar fogo")
             print("4. Voar")
             print("5. Dormir")
@@ -169,10 +171,11 @@ def main():
         choice = input("Digite sua escolha: ")
 
         if choice == '1':
-            pet.alimentar(50)
+            pet.alimentar()
         elif choice == '2':
             pet.brincar(50)
-        elif isinstance(pet, Tamaghosi_dragao) and choice == '3':
+        elif isinstance(pet, Tamaghosi_dragao) and choice == '3': #o end garante que a ação ssó executa se o pet for do tipo correto e o usuário tiver escolhido a opção certa
+
             pet.soltar_fogo()
         elif isinstance(pet, Tamaghosi_dragao) and choice == '4':
             pet.voar()
@@ -194,16 +197,47 @@ def main():
             print(f"Obrigado por jogar! Tchau, {pet.nome}!")
             break
         else:
-            print("Escolha inválida. Por favor, tente novamente.")
+            print("Escolha inválida, por favor tente novamente.")
         
-        # O tempo passa e o estado do bichinho muda
+        #o tempo passa e o estado do pet muda
         pet.tempoPassando()
         
-        # Verifica se o bichinho está vivo. Se não, o loop se encerra.
+        #verifica se o pet está vivo, se não tiver, o loop acaba
         if not pet.vida():
             break
             
-        time.sleep(1) # Pausa por 1 segundo para simular o tempo passando
+        time.sleep(1) #pausa por 1 segundo pra simular o tempo passando
 
 if __name__ == "__main__":
     main()
+
+
+
+# --- Lógica das contas do programa ---
+
+# Alimentar -> reduz a fome em uma porcentagem.
+# Ex: fome = 40, alimentar(50) -> fome cai 50% -> nova fome = 20.
+
+# Brincar -> reduz o tédio em uma porcentagem
+# Ex: tédio = 60, brincar(50) -> tédio cai 50% -> novo tédio = 30.
+
+# Humor -> calculado pela média da fome e do tédio.
+# Fórmula: humor = 100 - ((fome + tédio) / 2)
+# Quanto menor fome + tédio, melhor o humor.
+
+# Tempo passando (a cada rodada):
+# - idade aumenta +0.2
+# - fome aumenta +5
+# - tédio aumenta +2.5
+# (valores limitados até 100)
+
+# Saúde -> cai dependendo do nível de fome/tédio:
+# - acima de 50 -> perde 5
+# - acima de 70 -> perde 10
+# - acima de 90 -> perde 20
+# - se saúde chegar a 0 -> bichinho morre
+
+# Ações especiais (dependem do tipo de pet):
+# Dragão -> soltar fogo (-10 tédio), voar (+5 saúde), dormir (+10 saúde, +5 fome)
+# Robô   -> recarregar (bateria = 100), desligar (+10 saúde, -10 bateria), cantar (-15 tédio)
+# Bruxo  -> lançar magia (-10 tédio), visitar casa (+5 saúde, +5 fome), usar varinha (-20 tédio)
